@@ -1,35 +1,13 @@
-require('dotenv').config()
 
-const express=require('express')
-const mongoose=require('mongoose')
+const http = require('http');
+const app = require('./app')
 
-//express app
-const app=express()
 
-//use middleware
-app.use(express.json())
+const port = process.env.PORT || 3000;
 
-app.use((req,res,next)=>{
-    console.log(req.path,req.method)
-    next()
-})
 
-app.get('/', (req,res)=>{
-    res.json({mssg:'Welcome to the app'})
-})
+const server = http.createServer(app);
 
-// routes
 
-// connect to db
-mongoose.connect(process.env.MONGO_URI)
-    .then(()=>{
-        // listen request
-        app.listen(process.env.PORT, ()=>{
-            console.log('connect to db & listing on port', process.env.PORT)
-        })
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
+server.listen(port, console.log(`Server started on port ${port}`));
 
-process.env
