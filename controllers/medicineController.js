@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 
 
 
-
  
  
 
@@ -29,3 +28,5 @@ const getMedicine=async (req,res )=> {
     }
     res.status(200).json(Medicine)
 }
+
+
