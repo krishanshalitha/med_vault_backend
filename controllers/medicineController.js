@@ -60,3 +60,30 @@ const deleteMedicine= async (req,res)=>{
     res.status(200).json(Medicine)
 }
 
+// update a Medicine
+const updateMedicine=async (req,res)=>{
+    const {id}= req.params
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'No such a Medicine'})
+    }
+
+    const Medicine = await Medicine.findOneAndUpdate({_id:id},{
+        ...req.body
+    })
+
+    if(!Medicine){
+        return res.status(400).json({error: 'No such Medicine'})
+    }
+
+    res.status(200).json(Medicine)
+}
+
+
+module.exports={
+    getMedicines,
+    getMedicine,
+    createMedicine,
+    deleteMedicine,
+    updateMedicine
+}
