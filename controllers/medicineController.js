@@ -30,3 +30,16 @@ const getMedicine=async (req,res )=> {
 }
 
 
+//create new Medicine
+const createMedicine=async (req,res)=>{
+    const {title,load,reps}=req.body
+
+    // add doc to db
+    try{
+        const Medicine=await Medicine.create({medname,description,price,quantity})
+        res.status(200).json(Medicine)
+    }catch(error){
+        res.status(400).json({error: error.message})
+    }
+}
+
