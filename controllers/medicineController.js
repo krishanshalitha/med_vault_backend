@@ -43,3 +43,20 @@ const createMedicine=async (req,res)=>{
     }
 }
 
+// delete a Medicine
+const deleteMedicine= async (req,res)=>{
+    const {id}= req.params
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'No such a Medicine'})
+    }
+
+    const Medicine=await Medicine.findByIdAndDelete({_id: id})
+
+    if(!Medicine){
+        return res.status(400).json({error: 'No such Medicine'})
+    }
+
+    res.status(200).json(Medicine)
+}
+
