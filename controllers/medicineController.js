@@ -1,72 +1,43 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-
-const app = express();
-
-// Middleware
-app.use(bodyParser.json());
-
-// Connect to MongoDB
-mongoose
-  .connect('mongodb://localhost:27017/your_database_name', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true // to avoid deprecation warning
-  })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err)); // Handle error here
-
-// Routes
-const medicineRoutes = require('./routes/medicineRoutes');
-app.use('/medicines', medicineRoutes);
-
-// Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+const Medicine=require('../models/medicineModel')
+const mongoose = require('mongoose')
 
 
 
-// const Medicine=require('../models/medicineModel')
-// const mongoose = require('mongoose')
-
-
-
-// //control method for add medicine details
-// exports.addNewMedicineDetails = (req, res, next) => {
-//     const medicine = new Medicine({
-//         _id:new mongoose.Types.ObjectId(),
-//         medname:req.body.medname,
-//         description:req.body.description,
-//         price:req.body.price,
-//         quantity:req.body.quantity,
-//           });
-//     medicine
-//         .save()
-//         .then(result => {
-//             console.log(result);
-//             res.status(200).json({
-//                 message: "Created medicine details successfully",
-//                 createdMedicine: {
-//                     _id:result._id,
-//                     medname:result.medname,
-//                     description:result.description,
-//                     price:result.price,
-//                     quantity:result.quantity,                   
-//                     request: {
-//                             type: 'GET',
-//                             url:'http://localhost:4000/medicines/' + result._id
-//                     }
-//                 }
-//         });
-//     })
-//     .catch(err => {
-//         console.log(err);
-//             res.status(501).json({
-//                 message: 'Can\'t create a new  player details, Please try again later'
-//         });
-//     });
-//  }
+//control method for add medicine details
+exports.addNewMedicineDetails = (req, res, next) => {
+    const medicine = new Medicine({
+        _id:new mongoose.Types.ObjectId(),
+        medname:req.body.medname,
+        description:req.body.description,
+        price:req.body.price,
+        quantity:req.body.quantity,
+          });
+    medicine
+        .save()
+        .then(result => {
+            console.log(result);
+            res.status(200).json({
+                message: "Created medicine details successfully",
+                createdMedicine: {
+                    _id:result._id,
+                    medname:result.medname,
+                    description:result.description,
+                    price:result.price,
+                    quantity:result.quantity,                   
+                    request: {
+                            type: 'GET',
+                            url:'http://localhost:3000/medicines/' + result._id
+                    }
+                }
+        });
+    })
+    .catch(err => {
+        console.log(err);
+            res.status(501).json({
+                message: 'Can\'t create a new  player details, Please try again later'
+        });
+    });
+ }
 
  
  

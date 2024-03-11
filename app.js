@@ -11,7 +11,7 @@ const medicineRoutes = require('./routes/medicines');   //connect player route
 
 /*
 *
-* Connects to Mongodb instance on Atles
+* Connects to Mongodb instance on Atlas
 *
 */
 
@@ -20,7 +20,7 @@ const medicineRoutes = require('./routes/medicines');   //connect player route
 
 
 
-const MONGODB_URI = 'mongodb+srv://krishanshalitha:MCmkNePgcmSFYaaQ@medvault.drffzvu.mongodb.net/stock?retryWrites=true&w=majority';
+const MONGODB_URI = 'mongodb+srv://kuser:auser@medvault.glzwxzz.mongodb.net/?retryWrites=true&w=majority';
 const option =  {
    useNewUrlParser:true,
    useUnifiedTopology: true,
@@ -29,14 +29,16 @@ const option =  {
 
 
 /*Test the server wether connect or not*/
-mongoose.connect(MONGODB_URI, option, (err) => {
-   if (err){
-       console.error("Connection could not be create,Please recheck",
-       err
-       );
-   }else{
-       console.log("Connection to db ready");
-   }
-});
+// Remove useCreateIndex option
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
+
+
+
+//Test the mongodb connection
+mongoose.connection.on('connected',() => {
+    console.log('Mongoose is connected');
+ });
+ 
+ 
