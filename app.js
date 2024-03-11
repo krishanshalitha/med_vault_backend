@@ -65,4 +65,23 @@ mongoose.connection.on('connected',() => {
  
  })
  
+
+ app.use(morgan('dev')); //Used Morgan
+ //app.use('/uploads',express.static('uploads'));
+ app.use(bodyParser.urlencoded({extended: false}));  //this for encorded Url's supporting rech data
+ app.use(bodyParser.json());     //body paser for json data
+ 
+ 
+ app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Contend-Type, Accept, Authorization"
+    );
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'PUT , POST , PATCH , DELETE , GET');
+        return res.status(200).json({});
+    }
+    next();
+ });
+ 
  
