@@ -47,3 +47,22 @@ mongoose.connection.on('connected',() => {
     console.log('Mongoose default connection error: ' + err);
  });
  
+ 
+ //connection disconnected
+ mongoose.connection.on('disconnected',function(){
+    console.log('Mongoose default connection is disconnected');
+ });
+ 
+ 
+ //Close the mongoose connection
+ process.on("SIGINT", function(){
+    mongoose.connection.close(function(){
+        console.log("Mongoose default connection disconnected through web application"
+        );
+        process.exit(0)
+    });
+ 
+ 
+ })
+ 
+ 
