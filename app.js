@@ -41,4 +41,9 @@ mongoose.connection.on('connected',() => {
     console.log('Mongoose is connected');
  });
  
+
+ //The connection throws an error
+ mongoose.connection.on("error",function(err){
+    console.log('Mongoose default connection error: ' + err);
+ });
  
