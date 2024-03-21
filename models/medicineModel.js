@@ -21,4 +21,4 @@ const medicineSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports=mongoose.model('Medicine',medicineSchema)
+module.exports=mongoose.model('Pharmacy1',medicineSchema)
