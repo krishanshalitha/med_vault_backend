@@ -25,8 +25,7 @@ const getMedicine = async (req, res) => {
 
 // Create a new medicine
 const createMedicine = async (req, res) => {
-    const { } = req.body;
-    const { name, description, price, quantity } = req.body;
+    const { name, description, price, quantity } = req.body; // Corrected destructuring
 
     try {
         const medicine = await Medicine.create({ name, description, price, quantity });
@@ -35,6 +34,7 @@ const createMedicine = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
 
 // Delete a medicine
 const deleteMedicine = async (req, res) => {
