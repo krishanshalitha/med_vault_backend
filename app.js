@@ -90,7 +90,52 @@ mongoose.connection.on('connected',() => {
 const createMedicineForm = document.getElementById('create-medicine-form');
 const medicinesTableBody = document.getElementById('medicines-table tbody');
 
+// Fetch medicines and display them in the table
+async function fetchMedicines() {
+    const response = await fetch('/medicines');
+    const medicines = await response.json();
 
+    for (const medicine of medicines) {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = medicine.name;
+        row.appendChild(nameCell);
+
+        const descriptionCell = document.createElement('td');
+        descriptionCell.textContent = medicine.description;
+        row.appendChild(descriptionCell);
+
+        const priceCell = document.createElement('td');
+        priceCell.textContent = medicine.price;
+        row.appendChild(priceCell);
+
+        const quantityCell = document.createElement('td');
+        quantityCell.textContent = medicine.quantity;
+        row.appendChild(quantityCell);
+
+        const actionsCell = document.createElement('td');
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', async () => {
+            await fetch(`/medicines/${medicine._id}`, { method: 'DELETE' });
+            row.remove();
+        });
+        actionsCell.appendChild(deleteButton);
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', async () => {
+            // TODO: Implement edit functionality
+        });
+        actionsCell.appendChild(editButton);
+
+        row.appendChild(actionsCell);
+        medicinesTableBody.appendChild(row);
+    }
+}
+fetchMedicines();
 
 // Send a new medicine to the server
 createMedicineForm.addEventListener('submit', async (event) => {
