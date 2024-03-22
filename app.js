@@ -85,3 +85,30 @@ mongoose.connection.on('connected',() => {
  });
  
  
+ /////////////////////////////////////////////////////
+
+const createMedicineForm = document.getElementById('create-medicine-form');
+const medicinesTableBody = document.getElementById('medicines-table tbody');
+
+
+
+// Send a new medicine to the server
+createMedicineForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const description = document.getElementById('description').value;
+    const price = document.getElementById('price').value;
+    const quantity = document.getElementById('quantity').value;
+
+    await fetch('/medicines', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, description, price: parseFloat(price), quantity: parseInt(quantity) })
+    });
+
+    createMedicineForm.reset();
+    location.reload();
+});
