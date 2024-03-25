@@ -3,50 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS System</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-    </style>
+    <title>Medicine Management System</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>POS System</h1>
+    <h1>Medicine Management System</h1>
 
-    <!-- Form for creating a new medicine -->
-    <h2>Create New Medicine</h2>
-    <form id="create-medicine-form">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br>
-        <label for="description">Description:</label><br>
-        <input type="text" id="description" name="description" required><br>
-        <label for="price">Price:</label><br>
-        <input type="number" id="price" name="price" step="0.01" required><br>
-        <label for="quantity">Quantity:</label><br>
-        <input type="number" id="quantity" name="quantity" required><br>
-        <button type="submit">Create</button>
+    <div id="medicineList"></div>
+
+    <h2>Add New Medicine</h2>
+    <form id="addMedicineForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required>
+        <button type="submit">Add Medicine</button>
     </form>
 
-    <!-- Table for displaying medicines -->
-    <h2>Medicines</h2>
-    <table id="medicines-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Quantity</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <script src="app.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>

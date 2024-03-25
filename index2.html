@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Management System</title>
+    <style>
+        /* Basic styling for demonstration purposes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Medicine Management System</h1>
+
+    <!-- Form to add a new medicine -->
+    <form id="addMedicineForm">
+        <label for="medicineName">Name:</label>
+        <input type="text" id="medicineName" name="medicineName" required />
+
+        <label for="medicineDescription">Description:</label>
+        <input type="text" id="medicineDescription" name="medicineDescription" />
+
+        <label for="medicinePrice">Price:</label>
+        <input
+            type="number"
+            id="medicinePrice"
+            name="medicinePrice"
+            step="0.01"
+            required
+        />
+
+        <label for="medicineQuantity">Quantity:</label>
+        <input
+            type="number"
+            id="medicineQuantity"
+            name="medicineQuantity"
+            required
+        />
+
+        <button type="submit">Add Medicine</button>
+    </form>
+
+    <!-- Table to display existing medicines -->
+    <table id="medicineTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Medicine data will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Function to fetch medicines from the backend and update the table
+        async function fetchMedicines() {
+            const response = await fetch("/medicines");
+            const medicines = await response.json();
+            const tableBody = document.querySelector("#medicineTable tbody");
+            tableBody.innerHTML = "";
+            medicines.forEach((medicine) => {
+                const row = `<tr>
+                <td>${medicine.name}</td>
+                <td>${medicine.description}</td>
+                <td>${medicine.price}</td>
+                <td>${medicine.quantity}</td>
+            </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Function to handle form submission and add a new medicine
+        document
+            .getElementById("addMedicineForm")
+            .addEventListener("submit", async function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const requestData = {
+                    medicineName: formData.get("medicineName"),
+                    medicineDescription: formData.get("medicineDescription"),
+                    medicinePrice: parseFloat(formData.get("medicinePrice")),
+                    medicineQuantity: parseInt(formData.get("medicineQuantity")),
+                };
+                const response = await fetch("/medicines", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(requestData),
+                });
+                if (response.ok) {
+                    fetchMedicines();
+                    this.reset();
+                } else {
+                    const errorMessage = await response.text();
+                    alert(`Error: ${errorMessage}`);
+                }
+            });
+
+        // Fetch medicines when the page loads
+        fetchMedicines();
+    </script>
+</body>
+</html>
